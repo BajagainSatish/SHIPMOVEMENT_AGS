@@ -6,37 +6,56 @@ public class WaterBoat : MonoBehaviour
 {
     [SerializeField] private Transform Motor;
     [SerializeField] private float steerPower = 10000f;
-    [SerializeField] private float power = 700f;
+    [SerializeField] private float forwardMovementPower = 700f;
     [SerializeField] private float maxSpeed = 50f;
     [SerializeField] private float drag = 10f;
     [SerializeField] private Joystick joystick;
 
     private Rigidbody _rigidbody;
-    private Vector3 forward;
     private float steer;
     private bool movingForward;
+    private float moveHorizontal;
+    private float moveVertical;
 
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
+        steer = 0;
     }
 
     private void FixedUpdate()
     {
+        moveHorizontal = joystick.Horizontal;
+        moveVertical = joystick.Vertical;
+
+        //Rotational force
+        _rigidbody.AddForceAtPosition(steer * steerPower * transform.right / 100f, Motor.position);//boat rotates about the Motor gameobject
+
+        //actual forward movement throughout the entire game
+        ApplyForceToReachVelocity(_rigidbody, transform.forward * maxSpeed, forwardMovementPower);
+
+        // moving forward check
+        // if the y-component of the cross product of boat's forward direction and its velocity is negative, boat is moving forward
+        movingForward = Vector3.Cross(transform.forward, _rigidbody.velocity).y < 0;
+
+        //adjust boat velocity to ensure it moves in correct direction
+        //rotate velocity vector based on boat's movement direction
+        _rigidbody.velocity = Quaternion.AngleAxis(Vector3.SignedAngle(_rigidbody.velocity, (movingForward ? 1f : 0f) * transform.forward, Vector3.up) * drag, Vector3.up) * _rigidbody.velocity;
+
         //Boat Rotation
-        Vector2 input = new Vector2(joystick.Horizontal,joystick.Vertical);
+        Vector2 input = new Vector2(moveHorizontal,moveVertical);
         Vector2 inputDir = input.normalized;
-        if(inputDir != Vector2.zero)
+        if(inputDir != Vector2.zero)//persist in latest rotated direction
         {
         transform.eulerAngles = Vector3.up * Mathf.Atan2(inputDir.x,inputDir.y) * Mathf.Rad2Deg;
         }
 
         //steer direction
-        if (joystick.Horizontal >= .2f)
+        if (moveHorizontal >= .2f)
         {
             steer = -1;//right steer
         }
-        else if (joystick.Horizontal <= -.2f)
+        else if (moveVertical <= -.2f)
         {
             steer = 1;//left steer
         }
@@ -44,36 +63,19 @@ public class WaterBoat : MonoBehaviour
         {
             steer = 0;//forward
         }
-
-        //Rotational force
-        _rigidbody.AddForceAtPosition(steer * steerPower * transform.right / 100f, Motor.position);
-
-        //Compute vectors
-        //forward = Vector3.Scale(new Vector3(1,0,1),transform.forward);
-
-        //forward and backward power
-        if (joystick.Vertical >= .2f || joystick.Vertical <= -.2f)
-        {
-            ApplyForceToReachVelocity(_rigidbody, transform.forward * maxSpeed, power);
-        }
-
-        // moving forward
-        movingForward = Vector3.Cross(transform.forward, _rigidbody.velocity).y < 0;
-
-        //move in direction
-        _rigidbody.velocity = Quaternion.AngleAxis(Vector3.SignedAngle(_rigidbody.velocity, (movingForward ? 1f : 0f) * transform.forward, Vector3.up) * drag, Vector3.up) * _rigidbody.velocity;
     }
     private void ApplyForceToReachVelocity(Rigidbody rigidbody, Vector3 velocity, float force = 1, ForceMode mode = ForceMode.Force)
     {
-        if (force == 0 || velocity.magnitude == 0)
+        //This function applies force to the boat's rigidbody to reach the desired target velocity
+        if (force == 0 || velocity.magnitude == 0)//means no force needs to be applied
             return;
 
-        velocity = velocity + velocity.normalized * 0.2f * rigidbody.drag;
+        velocity += velocity.normalized * 0.2f * rigidbody.drag;
 
         //force = 1 => need 1 s to reach velocity (if mass is 1) => force can be max 1 / Time.fixedDeltaTime
         force = Mathf.Clamp(force, -rigidbody.mass / Time.fixedDeltaTime, rigidbody.mass / Time.fixedDeltaTime);
 
-        //dot product is a projection from rhs to lhs with a length of result / lhs.magnitude https://www.youtube.com/watch?v=h0NJK4mEIJU
+        //dot product is a projection from rhs to lhs with a length of result / lhs.magnitude
         if (rigidbody.velocity.magnitude == 0)
         {
             rigidbody.AddForce(velocity * force, mode);
