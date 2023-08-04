@@ -1,14 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class WaterBoat : MonoBehaviour
+public class BoatMovement : MonoBehaviour
 {
     [SerializeField] private Transform Motor;
     [SerializeField] private float steerPower = 10000f;
     [SerializeField] private float forwardMovementPower = 700f;
     [SerializeField] private float maxSpeed = 50f;
     [SerializeField] private float drag = 10f;
+    [SerializeField] private float rotationSpeed = 0.5f;
     [SerializeField] private Joystick joystick;
 
     private Rigidbody _rigidbody;
@@ -16,6 +15,7 @@ public class WaterBoat : MonoBehaviour
     private bool movingForward;
     private float moveHorizontal;
     private float moveVertical;
+    private Quaternion targetRotation;
 
     private void Awake()
     {
@@ -43,13 +43,15 @@ public class WaterBoat : MonoBehaviour
         _rigidbody.velocity = Quaternion.AngleAxis(Vector3.SignedAngle(_rigidbody.velocity, (movingForward ? 1f : 0f) * transform.forward, Vector3.up) * drag, Vector3.up) * _rigidbody.velocity;
 
         //Boat Rotation
-        Vector2 input = new Vector2(moveHorizontal,moveVertical);
+        Vector2 input = new Vector2(moveHorizontal, moveVertical);
         Vector2 inputDir = input.normalized;
-        if(inputDir != Vector2.zero)//persist in latest rotated direction
+        if (inputDir != Vector2.zero)//persist in latest rotated direction
         {
-        transform.eulerAngles = Vector3.up * Mathf.Atan2(inputDir.x,inputDir.y) * Mathf.Rad2Deg;
-        }
+            targetRotation = Quaternion.Euler(Vector3.up * Mathf.Atan2(inputDir.x, inputDir.y) * Mathf.Rad2Deg);
 
+            // Interpolate the rotation using Quaternion.Slerp
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
+        }
         //steer direction
         if (moveHorizontal >= .2f)
         {
