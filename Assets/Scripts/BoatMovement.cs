@@ -17,6 +17,8 @@ public class BoatMovement : MonoBehaviour
     private float moveVertical;
     private Quaternion targetRotation;
 
+    [SerializeField] private ButtonController buttonControllerScript;
+
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
@@ -25,6 +27,8 @@ public class BoatMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (buttonControllerScript.playIsClicked)
+        {
         moveHorizontal = joystick.Horizontal;
         moveVertical = joystick.Vertical;
 
@@ -64,6 +68,7 @@ public class BoatMovement : MonoBehaviour
         else
         {
             steer = 0;//forward
+        }
         }
     }
     private void ApplyForceToReachVelocity(Rigidbody rigidbody, Vector3 velocity, float force = 1, ForceMode mode = ForceMode.Force)
