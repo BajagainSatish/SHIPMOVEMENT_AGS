@@ -4,96 +4,50 @@ using UnityEngine;
 
 public class ButtonController : MonoBehaviour
 {
-    public Transform ShipA;
-    public Transform ShipB;
-    public Transform ShipC;
-    public Transform ShipD;
-    public Transform ShipE;
-    public Transform ShipF;
-    public Transform ShipG;
+    public static int totalBoatCount = 7;
+    public Transform[] Ships = new Transform[totalBoatCount];//an array of 7 ships
     public Transform selectedShipToPlay;
 
     [SerializeField] private GameObject leftButton;
     [SerializeField] private GameObject rightButton;
     [SerializeField] private GameObject playButton;
-
+    [SerializeField] private GameObject joystick;
     public bool playIsClicked;
 
     private void Start()
     {
+        joystick.SetActive(false);
         playIsClicked = false;
-        ShipA.gameObject.SetActive(true);
-        ShipB.gameObject.SetActive(false);
-        ShipC.gameObject.SetActive(false);
-        ShipD.gameObject.SetActive(false);
-        ShipE.gameObject.SetActive(false);
-        ShipF.gameObject.SetActive(false);
-        ShipG.gameObject.SetActive(false);
+        Ships[0].gameObject.SetActive(true);
+        Ships[0].GetChild(3).gameObject.SetActive(false);
+        for (int i = 1; i < totalBoatCount; i++)
+        {
+            Ships[i].gameObject.SetActive(false);
+            Ships[i].GetChild(3).gameObject.SetActive(false);
+        }
     }
     public void OnClickLeft()
     {
-        if (ShipB.gameObject.activeSelf == true)
+        for (int i = 1; i < totalBoatCount; i++)//omit the first boat
         {
-            ShipB.gameObject.SetActive(false);
-            ShipA.gameObject.SetActive(true);
-        }
-        else if (ShipC.gameObject.activeSelf == true)
-        {
-            ShipC.gameObject.SetActive(false);
-            ShipB.gameObject.SetActive(true);
-        }
-        else if (ShipD.gameObject.activeSelf == true)
-        {
-            ShipD.gameObject.SetActive(false);
-            ShipC.gameObject.SetActive(true);
-        }
-        else if (ShipE.gameObject.activeSelf == true)
-        {
-            ShipE.gameObject.SetActive(false);
-            ShipD.gameObject.SetActive(true);
-        }
-        else if (ShipF.gameObject.activeSelf == true)
-        {
-            ShipF.gameObject.SetActive(false);
-            ShipE.gameObject.SetActive(true);
-        }
-        else if (ShipG.gameObject.activeSelf == true)
-        {
-            ShipG.gameObject.SetActive(false);
-            ShipF.gameObject.SetActive(true);
+            if (Ships[i].gameObject.activeSelf == true)
+            {
+                Ships[i].gameObject.SetActive(false);
+                Ships[i - 1].gameObject.SetActive(true);
+                return;
+            }
         }
     }
     public void OnClickRight()
     {
-        if (ShipA.gameObject.activeSelf == true)
+        for (int i = 0; i < totalBoatCount - 1; i++)//omit the last boat
         {
-            ShipA.gameObject.SetActive(false);
-            ShipB.gameObject.SetActive(true);
-        }
-        else if (ShipB.gameObject.activeSelf == true)
-        {
-            ShipB.gameObject.SetActive(false);
-            ShipC.gameObject.SetActive(true);
-        }
-        else if (ShipC.gameObject.activeSelf == true)
-        {
-            ShipC.gameObject.SetActive(false);
-            ShipD.gameObject.SetActive(true);
-        }
-        else if (ShipD.gameObject.activeSelf == true)
-        {
-            ShipD.gameObject.SetActive(false);
-            ShipE.gameObject.SetActive(true);
-        }
-        else if (ShipE.gameObject.activeSelf == true)
-        {
-            ShipE.gameObject.SetActive(false);
-            ShipF.gameObject.SetActive(true);
-        }
-        else if (ShipF.gameObject.activeSelf == true)
-        {
-            ShipF.gameObject.SetActive(false);
-            ShipG.gameObject.SetActive(true);
+            if (Ships[i].gameObject.activeSelf == true)
+            {
+                Ships[i].gameObject.SetActive(false);
+                Ships[i + 1].gameObject.SetActive(true);
+                return;
+            }
         }
     }
 
@@ -102,44 +56,22 @@ public class ButtonController : MonoBehaviour
         leftButton.SetActive(false);
         rightButton.SetActive(false);
         playButton.SetActive(false);
+        joystick.SetActive(true);
         selectedShipToPlay = ActiveShip();
+        selectedShipToPlay.GetChild(3).gameObject.SetActive(true);
         playIsClicked = true;
     }
 
     private Transform ActiveShip()
     {
         //Return the one ship that is currently active
-        if (ShipA.gameObject.activeSelf)
+        for (int i = 0; i < totalBoatCount; i++)
         {
-            return ShipA;
+            if (Ships[i].gameObject.activeSelf)
+            {
+                return Ships[i].transform;
+            }
         }
-        else if (ShipB.gameObject.activeSelf)
-        {
-            return ShipB;
-        }
-        else if (ShipC.gameObject.activeSelf)
-        {
-            return ShipC;
-        }
-        else if (ShipD.gameObject.activeSelf)
-        {
-            return ShipD;
-        }
-        else if (ShipE.gameObject.activeSelf)
-        {
-            return ShipE;
-        }
-        else if (ShipF.gameObject.activeSelf)
-        {
-            return ShipF;
-        }
-        else if (ShipG.gameObject.activeSelf)
-        {
-            return ShipG;
-        }
-        else
-        {
-            return null;
-        }
+        return null;
     }
 }

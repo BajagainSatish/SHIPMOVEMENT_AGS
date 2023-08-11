@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using System.Collections.Generic;
 public class CameraFollowShip : MonoBehaviour
 {
     private Transform target;
@@ -8,44 +8,51 @@ public class CameraFollowShip : MonoBehaviour
     [SerializeField] private ButtonController buttonControllerScript;
     private Vector3 velocity = Vector3.zero;
 
+    [SerializeField] private Dictionary<int, int> dictionaryCameraX = new Dictionary<int, int> {
+        {0,25 },
+        {1,30 },
+        {2,27 },
+        {3,18 },
+        {4,8 },
+        {5,21 },
+        {6,10 }
+    };
+    [SerializeField] private Dictionary<int, int> dictionaryCameraY = new Dictionary<int, int> {
+        {0,15 },
+        {1,15 },
+        {2,18 },
+        {3,10 },
+        {4,4 },
+        {5,12 },
+        {6,5 }
+    };
+    [SerializeField] private Dictionary<int, int> dictionaryCameraZ = new Dictionary<int, int> {
+        {0,40 },
+        {1,40 },
+        {2,38 },
+        {3,27 },
+        {4,13 },
+        {5,36 },
+        {6,14 }
+    };
+
     private void Start()
     {
         if (!buttonControllerScript.playIsClicked)
         {
-            transform.eulerAngles = new Vector3(20,-135,0);
+            transform.eulerAngles = new Vector3(0,-135,0);
         }
     }
     private void FixedUpdate()
     {
         if (!buttonControllerScript.playIsClicked)
         {
-            if (buttonControllerScript.ShipA.gameObject.activeSelf)
+            for (int i = 0; i < ButtonController.totalBoatCount; i++)
             {
-                transform.position = new Vector3(28, 25, 36);
-            }
-            if (buttonControllerScript.ShipB.gameObject.activeSelf)
-            {
-                transform.position = new Vector3(34, 24, 40);
-            }
-            if (buttonControllerScript.ShipC.gameObject.activeSelf)
-            {
-                transform.position = new Vector3(29, 26, 35);
-            }
-            if (buttonControllerScript.ShipD.gameObject.activeSelf)
-            {
-                transform.position = new Vector3(19, 14, 22);
-            }
-            if (buttonControllerScript.ShipE.gameObject.activeSelf)
-            {
-                transform.position = new Vector3(8, 9, 11);
-            }
-            if (buttonControllerScript.ShipF.gameObject.activeSelf)
-            {
-                transform.position = new Vector3(18, 13, 26);
-            }
-            if (buttonControllerScript.ShipG.gameObject.activeSelf)
-            {
-                transform.position = new Vector3(8, 7, 11);
+                if (buttonControllerScript.Ships[i].gameObject.activeSelf)
+                {
+                transform.position = new Vector3(dictionaryCameraX[i], dictionaryCameraY[i], dictionaryCameraZ[i]);
+                }
             }
         }
         if (buttonControllerScript.playIsClicked)
