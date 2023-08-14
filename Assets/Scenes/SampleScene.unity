@@ -482,18 +482,6 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 2091079378}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &168483414 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2929252283123773951, guid: aaa2c939c0359ac4dbce3f49e8b90252,
-    type: 3}
-  m_PrefabInstance: {fileID: 2091079378}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45977bbae16431c46a013576a1aea384, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &184462324
 GameObject:
   m_ObjectHideFlags: 0
@@ -1068,7 +1056,6 @@ GameObject:
   - component: {fileID: 330585545}
   - component: {fileID: 330585544}
   - component: {fileID: 330585547}
-  - component: {fileID: 330585548}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1194,21 +1181,6 @@ MonoBehaviour:
     mipBias: 0
     varianceClampScale: 0.9
     contrastAdaptiveSharpening: 0
---- !u!114 &330585548
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 330585543}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 625ea1b678abcc44daf354dfe548e241, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 980035273880505156}
-  offset: {x: -71, y: 63, z: -106}
-  damping: 0.5
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -14753,7 +14725,6 @@ GameObject:
   - component: {fileID: 980035273880505157}
   - component: {fileID: 980035273880505159}
   - component: {fileID: 980035273880505158}
-  - component: {fileID: 980035273880505160}
   m_Layer: 0
   m_Name: StylShip_Unity
   m_TagString: Untagged
@@ -14973,7 +14944,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 491482037013729790}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fdae1983ba5de2a48a62b97a5ca877f6, type: 3}
   m_Name: 
@@ -15019,25 +14990,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &980035273880505160
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 491482037013729790}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e957c5892bca68b4ab34a21f81cb2d72, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Motor: {fileID: 45826297}
-  steerPower: 10000
-  forwardMovementPower: 700
-  maxSpeed: 50
-  drag: 10
-  rotationSpeed: 0.5
-  joystick: {fileID: 168483414}
 --- !u!23 &1067309446611866530
 MeshRenderer:
   m_ObjectHideFlags: 0

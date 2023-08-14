@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 88ceeb224536f0c4a89f860e412bd6c8
+guid: 997f098b83c00644db2b6456e273636c
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -50,7 +50,7 @@ TextureImporter:
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spriteGenerateFallbackPhysicsShape: 0
+  spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
@@ -107,13 +107,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: left_right_0
+      name: circle1_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
-        width: 450
-        height: 439
+        y: 5
+        width: 600
+        height: 595
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -121,29 +121,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f5f90e4b6cf45864f95cdf49b406a816
-      internalID: -1339629187
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: left_right_1
-      rect:
-        serializedVersion: 2
-        x: 450
-        y: 0
-        width: 450
-        height: 439
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3e9eb7f8297428b4494f22f6e2cae9fd
-      internalID: -672275601
+      spriteID: 2d843137551658841b7e90b67c4de15b
+      internalID: -284968931
       vertices: []
       indices: 
       edges: []
@@ -151,7 +130,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 1202b0c47ce01c14c9012485e24a1dfd
+    spriteID: ecb9d34bb07399544bdc5520e3b0a3dc
     internalID: 0
     vertices: []
     indices: 
@@ -159,8 +138,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      left_right_0: -1339629187
-      left_right_1: -672275601
+      circle1_0: -284968931
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
