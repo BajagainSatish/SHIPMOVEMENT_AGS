@@ -19,11 +19,11 @@ public class ButtonController : MonoBehaviour
         joystick.SetActive(false);
         playIsClicked = false;
         Ships[0].gameObject.SetActive(true);
-        Ships[0].GetChild(3).gameObject.SetActive(false);
+        Ships[0].GetChild(2).gameObject.SetActive(false);
         for (int i = 1; i < totalBoatCount; i++)
         {
             Ships[i].gameObject.SetActive(false);
-            Ships[i].GetChild(3).gameObject.SetActive(false);
+            Ships[i].GetChild(2).gameObject.SetActive(false);
         }
     }
     public void OnClickLeft()
@@ -58,7 +58,7 @@ public class ButtonController : MonoBehaviour
         playButton.SetActive(false);
         joystick.SetActive(true);
         selectedShipToPlay = ActiveShip();
-        selectedShipToPlay.GetChild(3).gameObject.SetActive(true);
+        selectedShipToPlay.GetChild(2).gameObject.SetActive(true);
         playIsClicked = true;
     }
 

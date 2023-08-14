@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class BoatMovement : MonoBehaviour
 {
-    [SerializeField] private Transform Motor;
-    [SerializeField] private float steerPower = 10000f;
     [SerializeField] private float forwardMovementPower = 700f;
     [SerializeField] private float maxSpeed = 50f;
     [SerializeField] private float drag = 10f;
@@ -11,7 +9,6 @@ public class BoatMovement : MonoBehaviour
     [SerializeField] private Joystick joystick;
 
     private Rigidbody _rigidbody;
-    private float steer;
     private bool movingForward;
     private float moveHorizontal;
     private float moveVertical;
@@ -22,7 +19,6 @@ public class BoatMovement : MonoBehaviour
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
-        steer = 0;
     }
 
     private void FixedUpdate()
@@ -31,9 +27,6 @@ public class BoatMovement : MonoBehaviour
         {
         moveHorizontal = joystick.Horizontal;
         moveVertical = joystick.Vertical;
-
-        //Rotational force
-        _rigidbody.AddForceAtPosition(steer * steerPower * transform.right / 100f, Motor.position);//boat rotates about the Motor gameobject
 
         //actual forward movement throughout the entire game
         ApplyForceToReachVelocity(_rigidbody, transform.forward * maxSpeed, forwardMovementPower);
@@ -55,19 +48,6 @@ public class BoatMovement : MonoBehaviour
 
             // Interpolate the rotation using Quaternion.Slerp
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
-        }
-        //steer direction
-        if (moveHorizontal >= .2f)
-        {
-            steer = -1;//right steer
-        }
-        else if (moveVertical <= -.2f)
-        {
-            steer = 1;//left steer
-        }
-        else
-        {
-            steer = 0;//forward
         }
         }
     }
