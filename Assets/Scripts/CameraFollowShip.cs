@@ -10,6 +10,7 @@ public class CameraFollowShip : MonoBehaviour
     [SerializeField] private Vector3[] movementOffset = new Vector3[ButtonController.totalBoatCount];
     [SerializeField] private float damping = 0.5f;
     [SerializeField] private ButtonController buttonControllerScript;
+    [SerializeField] private Vector3 movementRotationCameraValue = new Vector3(45,-35,0);//change to 30, 30, 0 for previous perspective for without culling
     private Vector3 velocity = Vector3.zero;
 
     [Serializable]
@@ -54,7 +55,7 @@ public class CameraFollowShip : MonoBehaviour
         if (buttonControllerScript.playIsClicked)
         {
         target = buttonControllerScript.selectedShipToPlay;
-        transform.eulerAngles = new Vector3(30,30,0);
+            transform.eulerAngles = movementRotationCameraValue;
         Vector3 movePosition = target.position + offset;
         transform.position = Vector3.SmoothDamp(transform.position,movePosition,ref velocity, damping);
         
@@ -143,5 +144,24 @@ Offset Values Z
 3.69
 1.56
 //scale 0.1
+
+//Ship scale 0.1
+For Movement Rotation (30,30,0), camera transform values :
+ShipA: -14 14 -21
+ShipB: -10 10 -15
+ShipC: -10 10 -15
+ShipD: -10 10 -17
+ShipE: -6 6 -8
+ShipF: -10 10 -15
+ShipG: -4 4 -7
+
+For Movement Rotation (45,-35,0), camera transform values :
+ShipA: 12 19 -13
+ShipB: -10 10 -15
+ShipC: -10 10 -15
+ShipD: -10 10 -17
+ShipE: -6 6 -8
+ShipF: -10 10 -15
+ShipG: -4 4 -7
 
  */ 
