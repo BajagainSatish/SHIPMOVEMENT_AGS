@@ -33,17 +33,11 @@ public class CameraFollowShip : MonoBehaviour
     }
     public StatinoaryOffsetCameraZ[] offsetValuesZ = new StatinoaryOffsetCameraZ[ButtonController.totalBoatCount];
 
-    private void Start()
-    {
-        if (!buttonControllerScript.playIsClicked)
-        {
-            transform.eulerAngles = new Vector3(0,-135,0);
-        }
-    }
     private void FixedUpdate()
     {
         if (!buttonControllerScript.playIsClicked)
         {
+            transform.eulerAngles = new Vector3(0,-135,0);
             for (int i = 0; i < ButtonController.totalBoatCount; i++)
             {
                 if (buttonControllerScript.Ships[i].gameObject.activeSelf)
